@@ -350,3 +350,127 @@ View your app in AI Studio: https://ai.studio/apps/drive/1rF64GlJoDO-I0duRmXha2v
   }
 }
 ```
+
+
+**Team Stand-up: Vampire Lair Quest – Modular Prompt Library for Google AI Studio**  
+**Date:** January 16, 2026 | **Location:** Virtual Crypt Conference, Riga time  
+
+
+### 1. Resource Management System
+
+```text
+Create a complete TypeScript module for resource management in an idle vampire strategy game called "Vampire Lair Quest".
+
+Requirements:
+- Use modern TypeScript (latest features)
+- Implement with Zustand for global state management
+- Resources: Blood, Souls, Bone/Stone, Iron/Obsidian, Essence, Void Crystals, Crafted Items (as grouped category)
+- Each resource has: current amount (number), per-second production (number), lastUpdate timestamp (for offline calculation)
+- Implement offline progress calculation: when app loads/comes to foreground → calculate delta time → add production * time * multipliers
+- Include basic production modifiers (global multiplier, night bonus, corruption bonus)
+- Provide typed actions: addResource(resourceName, amount), upgradeProduction(resourceName, multiplier)
+- Handle decimal precision (use toFixed(2) for display only, keep full precision internally)
+- Export: useResourcesStore hook + typed resource interface + production calculation function
+- Include comments explaining offline math
+```
+
+### 2. Buildings & Production Chains System
+
+```text
+Generate TypeScript code for the buildings and production chain system in an idle vampire-themed strategy game "Vampire Lair Quest".
+
+Requirements:
+- Define building types as union type or enum + interface
+- Each building has: id, name, chain (string), level (1+), baseCost (formula: level * base), currentCost, productionFormula, inputs[], outputs[]
+- Implement building upgrade logic with exponential cost scaling
+- Handle dependencies between buildings (some buildings require others to be built first)
+- Calculate total production per second across all buildings considering levels, thralls assigned, global modifiers
+- Support offline production calculation based on total p/s
+- Provide typed store/actions using Zustand: buildNew(buildingId), upgrade(buildingId), assignThralls(buildingId, count)
+- Include error handling for insufficient resources
+- Export: building definitions array/object, useBuildingsStore hook
+```
+
+### 3. Army Stacks & Unit System
+
+```text
+Create TypeScript implementation for army stack system inspired by simplified Heroes of Might & Magic V for game "Vampire Lair Quest".
+
+Key requirements:
+- Army = up to 7 stacks
+- Each stack = { unitType: string, count: number, currentHp: number, upgrades: string[], equippedItems: string[] }
+- Unit types: Skeleton Archers, Ghouls, Bats, Vampire Lords, Liches, Elder Dragons (with base stats: damage, hpPerUnit, speed, special)
+- Stack total stats: totalDamage = baseDamage * count * (1 + upgradeBonus + itemBonus), totalHp = hpPerUnit * count * modifiers
+- Implement quantity vs quality balance: large stacks get diminishing returns (damage multiplier ^0.8 for count > 1000)
+- Synergy system: certain unit combinations give bonus auras (e.g. skeletons + dragons = +15% dragon damage)
+- Typed interfaces and enums
+- Zustand store with actions: recruit(unitType, count), mergeStacks, equipItem(stackIndex, itemId), calculateArmyStrength()
+- Include comments explaining power scaling math
+```
+
+### 4. Google Maps Integration & Territory System
+
+```text
+Write TypeScript code module for Google Maps integration and territory influence system in browser-based idle vampire strategy game "Vampire Lair Quest".
+
+Requirements:
+- Use @react-google-maps/api library
+- Create MapView component showing Google Maps (satellite/hybrid mode)
+- Player starts with marker in Riga, Latvia
+- Territories = array of { id: string, name: string, latLng: {lat:number,lng:number}, controlTier: 0-4, defendingFaction: string, corruptionProgress: number }
+- Display custom markers/icons for player holdings (red pulsing), corrupted settlements (dark overlay), hunter hotspots (gold)
+- Implement influence system: Influence Points (IP) generation, spending IP to increase control tier on selected territory
+- Auto-spread influence offline (percentage per hour based on adjacent holdings)
+- Show corruption overlay polygons that darken with progress
+- Handle map zoom clustering for many territories
+- Export: MapView component, useTerritoriesStore (Zustand), influence calculation functions
+```
+
+### 5. Battle Resolution System
+
+```text
+Implement simplified auto-battle resolution system in TypeScript for vampire strategy idle game "Vampire Lair Quest" (Home Quest style auto-combat with HoMM5 stack inspiration).
+
+Requirements:
+- Battle = attacker army (7 stacks) vs defender army (enemy stacks)
+- Each side calculates total damage output and total HP
+- Simulate in phases (3-5 turns) or simple single-round resolution
+- Apply rock-paper-scissors advantages: bats evade ranged, wolves tank melee, etc.
+- Pre-battle tactics choice: Aggressive (+damage -defense), Defensive (+defense -damage), Flank (+synergy)
+- Outcome: win/loss/draw, calculate casualties (reduce stack counts proportionally)
+- Rewards on win: souls, essence, crafted items, territory control progress
+- Use deterministic math + small random variance (Math.random() * 0.2)
+- Export: battleSimulation(attacker: Army, defender: Army, tactics: string) => { winner: 'player'|'enemy'|'draw', report: string[], rewards: ResourceDelta }
+```
+
+### 6. Vampire & Human Faction Diplomacy/Intrigue System
+
+```text
+Create TypeScript module for vampire houses and human factions diplomacy/intrigue system in idle strategy game "Vampire Lair Quest".
+
+Requirements:
+- Vampire factions: House Dracul, House Lilitu, House Necros + 2-4 more (relations -100..+100)
+- Human factions: Peasant Villages, Merchants, Nobles, Military Orders, Church, Hunters
+- Relations decay over time, modified by actions (tributes paid, seductions, wars won/lost)
+- Intrigue actions: spend IP/resources to improve relations, betray, demand tribute, start war
+- Daily procedural events based on relation levels (e.g. "Jealousy Purge" on high Lilitu relation)
+- Typed store with Zustand: useFactionsStore, actions: improveRelation(houseId, amount), triggerIntrigue(actionType, targetId)
+- Include simple text event generator for flavor (R-rated tone when appropriate)
+```
+
+### 7. Player Progression & Offline System
+
+```text
+Implement core player progression and offline calculation system in TypeScript for idle vampire game "Vampire Lair Quest".
+
+Requirements:
+- Save/load player state using Firebase Firestore (player document)
+- Track lastActive timestamp
+- On app load: calculate offline time (max 48 hours), apply offline production for all resources
+- Apply offline influence spread, faction relation decay, auto-raid attempts (simple success chance)
+- Progression milestones: unlock new building chains, army slots, map regions based on total power/corruption level
+- Prestige-like "Ascension" events (optional later layers)
+- Handle first-time player onboarding (starting resources, Riga lair)
+- Export: useProgressionStore, calculateOfflineProgress() function, milestone checker
+```
+
