@@ -1,0 +1,7 @@
+{
+  "name": "Nocturnal Dominion",
+  "description": "An endless idle strategy/RPG game with vampire theme. Players rise as a vampire lord in a gothic world, corrupting real-world locations via Google Maps. Build lairs, generate resources, form armies of undead stacks (HoMM5-inspired: massive weak swarms or elite few), influence human settlements, engage in faction intrigues, and conquer endlessly. R-rated: Graphic gore, seduction, betrayals. Idle-friendly: Offline progress, short sessions. Core loop: Build -> Resources -> Army -> Fights/Quests -> Rewards -> New Demands -> Expand. Build structures to produce resources -> Use resources to recruit/upgrade army stacks -> Dispatch armies to corrupt/conquer map locations -> Win battles/quests for rewards (new units, buildings, influence) -> Unlock new demands (upkeep, tributes) -> Expand chains to meet demands -> Snowball endlessly.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
