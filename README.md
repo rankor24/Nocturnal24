@@ -7,7 +7,7 @@
 This contains everything you need to run your app locally.
 
 View your app in AI Studio: https://ai.studio/apps/drive/1rF64GlJoDO-I0duRmXha2v3aR0XNYkpe
-
+```
 {
   "game_title": "Vampire Lair Quest",
   "version": "1.0 Prototype Spec",
@@ -349,3 +349,4 @@ View your app in AI Studio: https://ai.studio/apps/drive/1rF64GlJoDO-I0duRmXha2v
     "monetization": "Optional: IAP for teleports/boosters."
   }
 }
+```
